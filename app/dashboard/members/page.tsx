@@ -77,7 +77,7 @@ export default function MembersPage() {
         if (projectsError) throw projectsError
         setProjects(projectsData || [])
 
-        if (projectsData && projectsData.length > 0) {
+        if (projectsData?.length) {
           setSelectedProjectId(projectsData[0].id)
           await fetchProjectMembers(projectsData[0].id)
         }
@@ -156,6 +156,7 @@ export default function MembersPage() {
         setError("No project selected.")
         return
       }
+
       const supabase = createClient()
       const { data: existingUser, error: userError } = await supabase
         .from("users")
@@ -180,9 +181,11 @@ export default function MembersPage() {
         return
       }
 
-      const { error: insertError } = await supabase.from("project_members").insert([
-        { project_id: selectedProjectId, user_id: existingUser.id, role: "member" },
-      ])
+      const { error: insertError } = await supabase.from("project_members").insert([{
+        project_id: selectedProjectId,
+        user_id: existingUser.id,
+        role: "member",
+      }])
 
       if (insertError) throw insertError
 
@@ -280,13 +283,11 @@ export default function MembersPage() {
                   <Info className="h-5 w-5 mt-1" />
                   <span>Only <span className="text-[#FFD700] font-bold">existing registered users</span> can be invited.</span>
                 </Alert>
+                <Button type="submit" className="w-full bg-[#38bdf8] text-black hover:bg-[#0ea5e9] hover:scale-105 transition-all">
+                  <UserPlus className="mr-2 h-4 w-4" /> Invite Member
+                </Button>
               </form>
             </CardContent>
-            <CardFooter>
-              <Button type="submit" className="w-full bg-[#38bdf8] text-black hover:bg-[#0ea5e9] hover:scale-105 transition-all">
-                <UserPlus className="mr-2 h-4 w-4" /> Invite Member
-              </Button>
-            </CardFooter>
           </Card>
 
           <Card className="bg-white/10 backdrop-blur-xl border border-white/20 shadow-lg">
