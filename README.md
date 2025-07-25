@@ -2,7 +2,7 @@
 A Jira-like project management application with a custom passcode authentication system.
 
 ## 🚀 Live Demo
-**[Click to View Live Application ](https://project-management-app-alpha-task-dx4fhymkw.vercel.app/)**
+**[Click to View Live Application ](https://alpha-task-project-management-app.vercel.app/)**
 
 
 
